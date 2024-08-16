@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "kindatweaks",
+  "version": "${version}",
+  "name": "kindatweaks",
+  "description": "",
+  "authors": [],
+  "contact": {
+    "repo": "https://github.com/pugur/kindatweaks"
+  },
+  "license": "MIT",
+  "icon": "assets/kindatweaks/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "main" : [
+      "com.pugur.kindatweaks.KindaTweaks"
+    ],
+    "client": [
+      "com.pugur.kindatweaks.KindaTweaksClient"
+    ],
+    "modmenu": [
+      "com.pugur.kindatweaks.compat.modmenu.ModMenuImpl"
+    ]
+  },
+  "mixins": [
+    "kindatweaks.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": ">=1.19.4"
+  }
+}
