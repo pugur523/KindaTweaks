@@ -18,7 +18,8 @@ import fi.dy.masa.malilib.util.StringUtils;
 
 public enum FeatureToggle implements IHotkeyTogglable, IConfigNotifiable<IConfigBoolean>
 {
-    TWEAK_SAFE_STEP_PROTECTION("tweakSafeStepProtection",false, "","Restrict Breaking Blocks below you when you're moving forward");
+    TWEAK_SAFE_STEP_PROTECTION("tweakSafeStepProtection",false, "","Restrict Breaking Blocks below you when you're moving forward"),
+    TWEAK_HOLD_FORWARD("tweakHoldForward", false, "", "Hold moving forward");
 
     public static final ImmutableList<FeatureToggle> VALUES = ImmutableList.copyOf(values());
 

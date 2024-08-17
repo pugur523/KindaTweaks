@@ -1,16 +1,23 @@
 package com.pugur.kindatweaks.config;
 
 import com.pugur.kindatweaks.gui.GuiConfigs;
+import fi.dy.masa.malilib.config.IConfigBoolean;
 import fi.dy.masa.malilib.gui.GuiBase;
 import fi.dy.masa.malilib.hotkeys.IHotkeyCallback;
 import fi.dy.masa.malilib.hotkeys.IKeybind;
 import fi.dy.masa.malilib.hotkeys.KeyAction;
+import fi.dy.masa.malilib.interfaces.IValueChangeCallback;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.option.KeyBinding;
+import net.minecraft.client.util.InputUtil;
 
 public class Callbacks {
 
     public static void init() {
+        MinecraftClient mc = MinecraftClient.getInstance();
         IHotkeyCallback callbackGeneric = new KeyCallbackHotkeysGeneric();
         Hotkeys.OPEN_CONFIG_GUI.getKeybind().setCallback(callbackGeneric);
+        FeatureToggle.TWEAK_HOLD_FORWARD.setValueChangeCallback(new FeatureCallbackHold(mc.options.forwardKey));
     }
 
     private static class KeyCallbackHotkeysGeneric implements IHotkeyCallback
@@ -30,6 +37,30 @@ public class Callbacks {
             }
 
             return false;
+        }
+    }
+
+    public static class FeatureCallbackHold implements IValueChangeCallback<IConfigBoolean>
+    {
+        private final KeyBinding keyBind;
+
+        public FeatureCallbackHold(KeyBinding keyBind)
+        {
+            this.keyBind = keyBind;
+        }
+
+        @Override
+        public void onValueChanged(IConfigBoolean config)
+        {
+            if (config.getBooleanValue())
+            {
+                KeyBinding.setKeyPressed(InputUtil.fromTranslationKey(this.keyBind.getBoundKeyTranslationKey()), true);
+                KeyBinding.onKeyPressed(InputUtil.fromTranslationKey(this.keyBind.getBoundKeyTranslationKey()));
+            }
+            else
+            {
+                KeyBinding.setKeyPressed(InputUtil.fromTranslationKey(this.keyBind.getBoundKeyTranslationKey()), false);
+            }
         }
     }
 
